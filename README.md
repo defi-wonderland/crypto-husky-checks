@@ -1,0 +1,1 @@
+# crypto-husky-checks
