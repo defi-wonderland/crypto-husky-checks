@@ -25,7 +25,7 @@ After installing, you should manually add any of the check scripts into your hus
 Example for adding `find-crypto-keys` as a pre-commit hook:
 
 ```
-npx husky add .husky/pre-commit "$(dirname "$0")/find-crypto-keys.sh"
+npx husky add .husky/pre-commit '$(dirname "$0")/find-crypto-keys.sh'
 ```
 
 ## Checks:
