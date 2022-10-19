@@ -24,10 +24,8 @@ After installing, you should manually add any of the check scripts into your hus
 
 Example for adding `find-crypto-keys` as a pre-commit hook:
 
-Add to `.husky/pre-commit`
-
 ```
-npx husky add .husky/pre-commit "npm test"
+npx husky add .husky/pre-commit . "$(dirname "$0")/find-crypto-keys.sh"
 ```
 
 ## Checks:
@@ -41,7 +39,3 @@ find-crypto-keys.sh - Checks for crypto private keys on commited code. Should be
 ## License
 
 MIT license. Feel free to use, modify, and/or redistribute this software as you see fit. See the LICENSE file for more information.
-
-```
-
-```
