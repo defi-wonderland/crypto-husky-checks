@@ -1,0 +1,31 @@
+{
+  "name": "@defi-wonderland/crypto-husky-checks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node ./build.js",
+    "test": "sh test/all.sh",
+    "postinstall": "node ./post-install.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/defi-wonderland/crypto-husky-checks.git"
+  },
+  "keywords": [
+    "checks",
+    "node",
+    "setup",
+    "crypto",
+    "husky"
+  ],
+  "author": "Wonderland",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/defi-wonderland/crypto-husky-checks/issues"
+  },
+  "homepage": "https://github.com/defi-wonderland/crypto-husky-checks#readme",
+  "dependencies": {
+    "fs-extra": "10.1.0"
+  }
+}
