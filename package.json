@@ -1,5 +1,5 @@
 {
-  "name": "crypto-husky-checks",
+  "name": "@defi-wonderland/crypto-husky-checks",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
