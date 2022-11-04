@@ -19,11 +19,11 @@ setup() {
   git config user.name "test"
   # Init package.json
   # npm_config_loglevel="error"
-  yarn init -y 1>/dev/null
+  npm init -y 1>/dev/null
 }
 
 install() {
-  yarn add ../crypto-husky-checks.tgz
+  npm install ../crypto-husky-checks.tgz
 }
 
 expect() {
