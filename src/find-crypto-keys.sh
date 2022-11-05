@@ -9,14 +9,14 @@ FOUND=""
 # Check HEAD
 if git rev-parse --verify HEAD > /dev/null 2>&1
 then
-	against=HEAD
+	AGAINST=HEAD
 else
     empty_tree=$( git hash-object -t tree /dev/null )
-	against="$empty_tree"
+	AGAINST="$empty_tree"
 fi
 
 # Get a list of files in the index excluding deleted files
-FILE_LIST=$(git diff --cached --name-only --diff-filter=d ${against})
+FILE_LIST=$(git diff --cached --name-only --diff-filter=d ${AGAINST})
 SHOW_FIRST=5
 SHOW_LAST=10
 ASTERISKS_LENGTH=$(expr 64 - ${SHOW_FIRST} - ${SHOW_LAST})
