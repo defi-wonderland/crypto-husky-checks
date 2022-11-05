@@ -23,7 +23,21 @@ setup() {
 }
 
 install() {
+  npm install husky -D
+  npm set-script prepare "husky install"
+  npm run prepare
   npm install ../crypto-husky-checks.tgz
+  npx husky add .husky/pre-commit '. "$(dirname "$0")/wonderland/find-crypto-keys.sh"'
+}
+
+clean() {
+  name="$(basename -- $0)"
+  testDir="/tmp/crypto-husky-checks-test-$name"
+  echo "-------------------"
+  echo "Cleaning $name"
+  echo "-------------------"
+  cd ..
+  rm -rf "$testDir"
 }
 
 expect() {
