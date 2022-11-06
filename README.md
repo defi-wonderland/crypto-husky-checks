@@ -1,9 +1,13 @@
-[![Node.js CI](https://github.com/defi-wonderland/crypto-husky-checks/actions/workflows/node.js.yml/badge.svg)](https://github.com/defi-wonderland/crypto-husky-checks/actions/workflows/node.js.yml)
+[![Node.js CI](https://github.com/defi-wonderland/crypto-husky-checks/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/defi-wonderland/crypto-husky-checks/actions/workflows/node.js.yml)
 [![license badge](https://img.shields.io/github/license/defi-wonderland/check-crypto-action)](./LICENSE)
 
-# crypto-husky-checks
+# Crypto Husky Checks
 
-TODO Add desc
+Avoid committing sensitive information by installing these automated security checks in your precommit hook.
+
+Features:
+
+- Checks for crypto private keys on commited code
 
 ## Requirements
 
