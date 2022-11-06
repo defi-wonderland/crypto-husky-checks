@@ -27,7 +27,8 @@ install() {
   npm set-script prepare "husky install" --silent
   npm run prepare &>/dev/null
   npm install ../crypto-husky-checks.tgz --silent
-  npx --package=husky -c "husky add .husky/pre-commit '. \"\$(dirname \"\$0\")/wonderland/find-crypto-keys.sh\"'"
+  # npx --package=husky -c "husky add .husky/pre-commit '. \"\$(dirname \"\$0\")/wonderland/find-crypto-keys.sh\"'"
+  npx husky add .husky/pre-commit "" && echo '. "$(dirname "$0")/wonderland/find-crypto-keys.sh"' >> .husky/pre-commit
 }
 
 clean() {
