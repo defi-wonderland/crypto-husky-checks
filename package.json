@@ -1,10 +1,10 @@
 {
   "name": "@defi-wonderland/crypto-husky-checks",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "node ./build.js",
+    "build": "echo 'Build not necessary'",
     "test": "sh test/all.sh",
     "postinstall": "node ./post-install.js"
   },
@@ -18,6 +18,10 @@
     "setup",
     "crypto",
     "husky"
+  ],
+  "files": [
+    "src",
+    "post-install.js"
   ],
   "author": "Wonderland",
   "license": "MIT",
