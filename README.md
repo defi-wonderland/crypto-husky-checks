@@ -1,4 +1,13 @@
-# crypto-husky-checks
+[![Node.js CI](https://github.com/defi-wonderland/crypto-husky-checks/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/defi-wonderland/crypto-husky-checks/actions/workflows/node.js.yml)
+[![license badge](https://img.shields.io/github/license/defi-wonderland/check-crypto-action)](./LICENSE)
+
+# Crypto Husky Checks
+
+Avoid committing sensitive information by installing these automated security checks in your precommit hook.
+
+Features:
+
+- Checks for crypto private keys on commited code
 
 ## Requirements
 
@@ -22,10 +31,10 @@ This will add the check scripts inside `.husky/wonderland`
 
 After installing, you should manually add any of the check scripts into your husky hooks file.
 
-Example for adding `find-crypto-keys` as a pre-commit hook:
+Example for adding `find-crypto-keys` as a pre-commit hook on `linux | macos | windows`:
 
 ```
-npx husky add .husky/pre-commit '. "$(dirname "$0")/wonderland/find-crypto-keys.sh"'
+npx husky add .husky/pre-commit "" && echo '. "$(dirname "$0")/wonderland/find-crypto-keys.sh"' >> .husky/pre-commit
 ```
 
 ## Checks:
