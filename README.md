@@ -22,7 +22,7 @@ This will add the check scripts inside `.husky/wonderland`
 
 After installing, you should manually add any of the check scripts into your husky hooks file.
 
-Example for adding `find-crypto-keys` as a pre-commit hook on `linux`:
+Example for adding `find-crypto-keys` as a pre-commit hook on `linux | macos`:
 
 ```
 npx --package=husky -c "husky add .husky/pre-commit '. \"\$(dirname \"\$0\")/wonderland/find-crypto-keys.sh\"'"
