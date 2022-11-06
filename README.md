@@ -1,4 +1,9 @@
+[![Node.js CI](https://github.com/defi-wonderland/crypto-husky-checks/actions/workflows/node.js.yml/badge.svg)](https://github.com/defi-wonderland/crypto-husky-checks/actions/workflows/node.js.yml)
+[![license badge](https://img.shields.io/github/license/defi-wonderland/check-crypto-action)](./LICENSE)
+
 # crypto-husky-checks
+
+TODO Add desc
 
 ## Requirements
 
@@ -22,17 +27,11 @@ This will add the check scripts inside `.husky/wonderland`
 
 After installing, you should manually add any of the check scripts into your husky hooks file.
 
-Example for adding `find-crypto-keys` as a pre-commit hook on `linux | macos`:
+Example for adding `find-crypto-keys` as a pre-commit hook on `linux | macos | windows`:
 
 ```
-npx --package=husky -c "husky add .husky/pre-commit '. \"\$(dirname \"\$0\")/wonderland/find-crypto-keys.sh\"'"
+npx husky add .husky/pre-commit "" && echo '. "$(dirname "$0")/wonderland/find-crypto-keys.sh"' >> .husky/pre-commit
 ```
-
-> The npx husky command can fail, it can't escape the wrong characters depending on envs and OS.
-
-> If that happens, please add the line manually to the .husky/pre-commit file.
-
-> Related: https://github.com/npm/cli/issues/3067
 
 ## Checks:
 
