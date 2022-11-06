@@ -26,7 +26,7 @@ ASTERISKS=$(printf "*%.0s" $(seq $ASTERISKS_LENGTH))
 for FILE in $FILE_LIST
 do
     if [ ! -z $(git diff --cached --unified=0 $FILE | grep '^+' | grep -E -o '[1234567890abcdefABCDEF]{64}') ]; then
-        QUERY=`git diff --cached $FILE | grep '^+' | grep -E -o '[1234567890abcdefABCDEF]{64}' | sed -r "s/(.{${SHOW_FIRST}})(.*)(.{${SHOW_LAST}})/\1$ASTERISKS\3/")`
+        QUERY=`git diff --cached $FILE | grep '^+' | grep -E -o '[1234567890abcdefABCDEF]{64}' | sed -r "s/(.{${SHOW_FIRST}})(.*)(.{${SHOW_LAST}})/\1$ASTERISKS\3/"`
         FOUND="${FOUND} ${BLUE}${FILE}:${RED}${QUERY}${RESTORE}\n"
     fi
 done
