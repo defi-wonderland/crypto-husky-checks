@@ -1,13 +1,17 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
-INSTALL_DIR=".husky/wonderland"
+HUSKY_DIR=".husky"
+INSTALL_DIR_NAME="wonderland"
+INSTALL_DIR="$HUSKY_DIR/$INSTALL_DIR_NAME"
+PRE_COMMIT_FILE="$HUSKY_DIR/pre-commit"
+SCRIPTS=("find-crypto-keys.sh")
 
 install()
 {
   # fail if husky install was not run
-  if [ ! -d ".husky" ]; then
-    echo "Husky must be configured before setting up @defi-wonderland/crypto-husky-checks"
+  if [ ! -d $HUSKY_DIR ]; then
+    echo "Husky must be configured before setting up Wonderland Husky Checks"
     exit 1;
   fi
 
@@ -18,24 +22,26 @@ install()
   # git ignore everything inside wonderland directory
   echo "*" > $INSTALL_DIR/.gitignore
 
-  # copy scripts to wonderland directory
-  cp "$SCRIPT_DIR/find-crypto-keys.sh" "$INSTALL_DIR/"
-
   # create pre-commit file if needed
-  if [ ! -f ".husky/pre-commit" ]; then
-    npx husky add .husky/pre-commit ""
+  if [ ! -f $PRE_COMMIT_FILE ]; then
+    npx husky add $PRE_COMMIT_FILE ""
   fi
 
-  # add find-crypto-keys script to pre-commit if needed
-  if [ ! grep -q "find-crypto-keys\.sh" "./.husky/pre-commit" ]; then
-    cat <<EOF >./.husky/pre-commit
-    . "$(dirname "$0")/wonderland/find-crypto-keys.sh"
-    EOF
+  for script in "${SCRIPTS[@]}"
+  do
+    # copy script to wonderland directory
+    cp "$SCRIPT_DIR/$script" "$INSTALL_DIR/"
 
-    # echo '. "$(dirname "$0")/wonderland/find-crypto-keys.sh"' >> .husky/pre-commit
-  fi
+    # add script to pre-commit if needed
+    if ! grep -q $script $PRE_COMMIT_FILE; then
+      tee -a $PRE_COMMIT_FILE << EOF
 
-  echo "@defi-wonderland/crypto-husky-checks configured succesfully"
+. "\$(dirname "\$0")/$INSTALL_DIR_NAME/$script"
+EOF
+fi > /dev/null
+  done
+
+  echo "Wonderland Husky Checks configured succesfully"
 }
 
 uninstall()
@@ -43,10 +49,10 @@ uninstall()
   # remove installation directory
   rm -rf $INSTALL_DIR
 
-  # remove lines containing wonderland from the pre-commit file
-  # TODO
+  # remove wonderland lines from the pre-commit file
+  sed -i '' -e "/\/$INSTALL_DIR_NAME\//d" $PRE_COMMIT_FILE
 
-  echo "@defi-wonderland/crypto-husky-checks uninstalled succesfully"
+  echo "Wonderland Husky Checks uninstalled succesfully"
 }
 
 case $1 in

@@ -9,32 +9,20 @@ Features:
 
 - Checks for crypto private keys on commited code
 
+---
+
 ## Requirements
 
-- Husky
-
-```
-npm install husky -D
-npm set-script prepare "husky install"
-npm run prepare
+```bash
+yarn add -D husky
 ```
 
 ## Install
 
-You can install Wonderland crypto checks for husky via npm or yarn:
-
-`npm i -D @defi-wonderland/crypto-husky-checks`
-
-This will add the check scripts inside `.husky/wonderland`
-
-## Usage
-
-After installing, you should manually add any of the check scripts into your husky hooks file.
-
-Example for adding `find-crypto-keys` as a pre-commit hook on `linux | macos | windows`:
-
-```
-npx husky add .husky/pre-commit "" && echo '. "$(dirname "$0")/wonderland/find-crypto-keys.sh"' >> .husky/pre-commit
+```bash
+yarn add -D @defi-wonderland/crypto-husky-checks
+npm set-script prepare "husky install && wonderland-crypto-husky-checks install"
+npm run prepare
 ```
 
 ## Checks:
