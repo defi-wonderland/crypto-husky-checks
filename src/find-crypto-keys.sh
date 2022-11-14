@@ -5,15 +5,28 @@ YELLOW='\033[00;33m'
 BLUE='\033[00;34m'
 
 FOUND=""
+COMMIT_MSG="$1"
+ONLY_WARN="false"
 
 # Check HEAD
-if git rev-parse --verify HEAD > /dev/null 2>&1
-then
+if git rev-parse --verify HEAD > /dev/null 2>&1; then
 	AGAINST=HEAD
 else
     empty_tree=$( git hash-object -t tree /dev/null )
 	AGAINST="$empty_tree"
 fi
+
+echo "args: $1 $2 $3 $4\n"
+
+printf "commit msg: $COMMIT_MSG\n"
+
+if echo "$COMMIT_MSG" | grep -q "\[no-check\]"; then
+    ONLY_WARN="true"
+    echo "PASAAAAA TIENE NO-CHECK"
+fi
+
+printf "ONLY WARN /////////////////////\n"
+printf "$ONLY_WARN\n"
 
 # Get a list of files in the index excluding deleted files
 FILE_LIST=$(git diff --cached --name-only --diff-filter=d ${AGAINST})
@@ -34,10 +47,16 @@ done
 # if FOUND is not empty, REJECT the COMMIT
 
 if [ ! -z "$FOUND" ]; then
-    printf "${RED}COMMIT REJECTED: ${RESTORE}"
-    printf "${YELLOW}Possible private key${RESTORE}\n"
-    printf "Please check the next files, if they are ok, commit with ${YELLOW}--no-verify${RESTORE}\n"
-    printf "$FOUND"
-    exit 1
+    if [ "$ONLY_WARN" = "true" ]; then
+        printf "${YELLOW}Possible private key${RESTORE}\n"
+        printf "Please check the next files\n"
+        printf "$FOUND"
+    else
+        printf "${RED}COMMIT REJECTED: ${RESTORE}"
+        printf "${YELLOW}Possible private key${RESTORE}\n"
+        printf "Please check the next files, if they are ok, commit with ${YELLOW}--no-verify${RESTORE}\n"
+        printf "$FOUND"
+        exit 1
+    fi
 fi
 exit 0

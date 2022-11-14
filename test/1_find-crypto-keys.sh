@@ -27,7 +27,20 @@ EOF
 
 git add .
 expect 1 "git commit -m foo -q > /dev/null 2>&1"
-ok "Expect commit to fail"
+ok "Expect commit with leak to fail"
+
+# Expect commit with leak and flag to pass
+cat <<EOF >testfile
+first line
+testLeak=abd3d28282b3b0e68918328527dbf73f6e79781bbaded0b24fdc3e43bf6fc56e
+third line
+EOF
+
+git add .
+expect 0 "git commit -m \"\[no-check\]\" -q > /dev/null 2>&1"
+ok "Expect commit with leak and flag to pass"
+
+
 
 # Clean test folder
 clean
