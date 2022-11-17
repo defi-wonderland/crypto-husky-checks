@@ -1,12 +1,13 @@
 {
   "name": "@defi-wonderland/crypto-husky-checks",
-  "version": "1.1.1",
-  "description": "",
-  "main": "index.js",
+  "version": "1.2.0",
+  "description": "Automated security checks for your precommit hook",
   "scripts": {
     "build": "echo 'Build not necessary'",
-    "test": "sh test/all.sh",
-    "postinstall": "node ./post-install.js"
+    "test": "sh test/all.sh"
+  },
+  "bin": {
+    "wonderland-crypto-husky-checks": "src/bin.sh"
   },
   "repository": {
     "type": "git",
@@ -20,16 +21,12 @@
     "husky"
   ],
   "files": [
-    "src",
-    "post-install.js"
+    "src"
   ],
   "author": "Wonderland",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/defi-wonderland/crypto-husky-checks/issues"
   },
-  "homepage": "https://github.com/defi-wonderland/crypto-husky-checks#readme",
-  "dependencies": {
-    "fs-extra": "10.1.0"
-  }
+  "homepage": "https://github.com/defi-wonderland/crypto-husky-checks#readme"
 }
