@@ -30,7 +30,7 @@ install() {
   npm install husky -D --silent
   npm install ../crypto-husky-checks.tgz --silent
   npm set-script prepare "husky install && wonderland-crypto-husky-checks install" --silent
-  npm run prepare
+  npm run prepare 1>/dev/null
 }
 
 clean() {
