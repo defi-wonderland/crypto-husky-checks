@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" || "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]]; then
-  echo "Windows is non-supported, get a decent OS, or at least use WSL..."
+  echo "Windows is not supported, I would seriously consider using WSL..."
   exit 1;
 fi
 
