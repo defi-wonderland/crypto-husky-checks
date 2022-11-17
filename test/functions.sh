@@ -1,13 +1,17 @@
 # Exit on error
 set -eu
 
+RESTORE='\033[0m'
+RED='\033[00;31m'
+GREEN='\033[00;32m'
+
 setup() {
   name="$(basename -- $0)"
   testDir="/tmp/crypto-husky-checks-test-$name"
   echo
-  echo "-------------------"
+  echo "-----------------------------------"
   echo "+ $name"
-  echo "-------------------"
+  echo "-----------------------------------"
   echo
   # Create test directory
   rm -rf "$testDir"
@@ -26,16 +30,17 @@ install() {
   npm install husky -D --silent
   npm install ../crypto-husky-checks.tgz --silent
   npm set-script prepare "husky install && wonderland-crypto-husky-checks install" --silent
-  npm run prepare --silent
-  printf "\n"
+  npm run prepare 1>/dev/null
 }
 
 clean() {
   name="$(basename -- $0)"
   testDir="/tmp/crypto-husky-checks-test-$name"
-  echo "-------------------"
+  echo
+  echo "-----------------------------------"
   echo "Cleaning $name"
-  echo "-------------------"
+  echo "-----------------------------------"
+  echo
   cd ..
   rm -rf "$testDir"
 }
@@ -51,10 +56,10 @@ expect() {
 }
 
 error() {
-  echo -e "\n\e[0;31mERROR:\e[m $1"
+  printf "\n${RED}ERROR:${RESTORE} $1 \n"
   exit 1
 }
 
 ok() {
-  echo "\e[0;32mOK\e[m - $1"
+  printf "${GREEN}OK${RESTORE} - $1 \n"
 }
