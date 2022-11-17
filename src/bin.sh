@@ -1,8 +1,12 @@
 #!/bin/bash
 
+if [[ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" || "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]]; then
+  echo "Windows is non-supported, get a decent OS, or at least use WSL..."
+  exit 1;
+fi
+
 REPOSITORY_NAME="@defi-wonderland/crypto-husky-checks"
-echo "$(cd)"
-SCRIPT_DIR="$(cd "$(dirname "$0")"; cd ..; cd)/$REPOSITORY_NAME/src"
+SCRIPT_DIR="$(cd "$(dirname "$0")"; cd ..; pwd)/$REPOSITORY_NAME/src"
 HUSKY_DIR=".husky"
 INSTALL_DIR_NAME="wonderland"
 INSTALL_DIR="$HUSKY_DIR/$INSTALL_DIR_NAME"
