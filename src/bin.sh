@@ -1,6 +1,7 @@
 #!/bin/bash
 
-SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
+REPOSITORY_NAME="@defi-wonderland/crypto-husky-checks"
+SCRIPT_DIR="$(cd "$(dirname "$0")"; cd ..; pwd)/$REPOSITORY_NAME/src"
 HUSKY_DIR=".husky"
 INSTALL_DIR_NAME="wonderland"
 INSTALL_DIR="$HUSKY_DIR/$INSTALL_DIR_NAME"
