@@ -6,6 +6,7 @@ if [[ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" || "$(expr substr $(unam
 fi
 
 REPOSITORY_NAME="@defi-wonderland/crypto-husky-checks"
+# TODO: in order to support Windows, pwd must be replaced for something else
 SCRIPT_DIR="$(cd "$(dirname "$0")"; cd ..; pwd)/$REPOSITORY_NAME/src"
 HUSKY_DIR=".husky"
 INSTALL_DIR_NAME="wonderland"

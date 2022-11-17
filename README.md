@@ -9,6 +9,8 @@ Features:
 
 - Checks for crypto private keys on commited code
 
+> :warning: **This repository does not support Windows OS**
+
 ---
 
 ## Requirements
