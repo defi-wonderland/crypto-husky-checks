@@ -19,3 +19,19 @@ jobs:
       - run: yarn --version
       - run: yarn --frozen-lockfile
       - run: yarn test
+
+  build-windows:
+    if: ${{ false }} # disable till windows support
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [16]
+        os: [windows-latest]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn --version
+      - run: yarn --frozen-lockfile
+      - run: yarn test
