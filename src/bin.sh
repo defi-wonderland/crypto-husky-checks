@@ -22,24 +22,32 @@ SCRIPTS=("find-crypto-keys.sh")
 
 install()
 {
+  echo "*** 1"
   # fail if husky install was not run
   if [ ! -d $HUSKY_DIR ]; then
+    echo "*** 2"
     echo "Husky must be configured before setting up Wonderland Husky Checks"
     exit 1;
   fi
 
+  echo "*** 3"
   # create .husky wonderland directory from scratch
   rm -rf $INSTALL_DIR
+  echo "*** 4"
   mkdir $INSTALL_DIR
+  echo "*** 5"
 
   # git ignore everything inside wonderland directory
   echo "*" > $INSTALL_DIR/.gitignore
+  echo "*** 6"
 
   # create pre-commit file if needed
   if [ ! -f $PRE_COMMIT_FILE ]; then
+    echo "*** 7"
     npx husky add $PRE_COMMIT_FILE ""
   fi
 
+  echo "*** 8"
   for script in "${SCRIPTS[@]}"
   do
     # copy script to wonderland directory
@@ -53,6 +61,8 @@ install()
 EOF
 fi > /dev/null
   done
+
+  echo "*** 9"
 
   echo "Wonderland Husky Checks configured succesfully"
 }
