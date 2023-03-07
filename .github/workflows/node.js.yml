@@ -21,7 +21,6 @@ jobs:
       - run: yarn test
 
   build-windows:
-    if: ${{ false }} # disable till windows support
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
