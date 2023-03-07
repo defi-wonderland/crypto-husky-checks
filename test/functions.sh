@@ -32,10 +32,13 @@ install() {
   echo "install ../crypto-husky-checks.tgz"
   npm install ../crypto-husky-checks.tgz
   echo "set script"
-  npm pkg set scripts.prepareOne="husky install"
-  npm pkg set scripts.prepareTwo="wonderland-crypto-husky-checks install"
   ls -al node_modules
   ls -al node_modules/.bin
+  rm -rf node_modules/.bin/husky.cmd
+  rm -rf node_modules/.bin/husky.ps1
+  npm pkg set scripts.prepareOne="husky install"
+  npm pkg set scripts.prepareTwo="wonderland-crypto-husky-checks install"
+  cat node_modules/.bin/wonderland-crypto-husky-checks
   echo "run prepareOne"
   npm run prepareOne
   echo "run prepareTwo"
