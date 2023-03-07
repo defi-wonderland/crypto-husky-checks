@@ -32,8 +32,13 @@ install() {
   echo "install ../crypto-husky-checks.tgz"
   npm install ../crypto-husky-checks.tgz
   echo "set script"
+  npm pkg set scripts.prepareOne="husky install"
+  npm pkg set scripts.prepareTwo="wonderland-crypto-husky-checks install"
+  echo "run prepareOne"
+  npm run prepareOne
+  echo "run prepareTwo"
+  npm run prepareTwo
   npm pkg set scripts.prepare="husky install && wonderland-crypto-husky-checks install"
-  echo "run prepare"
   npm run prepare 1>/dev/null
   echo "finish"
 }

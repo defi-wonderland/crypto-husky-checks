@@ -3,8 +3,10 @@
 REPOSITORY_NAME="@defi-wonderland/crypto-husky-checks"
 
 if [[ "$OSTYPE" == darwin* || "$OSTYPE" == linux* ]]; then
+  # Run script for MacOS and Linux
   SCRIPT_DIR="$(cd "$(dirname "$0")"; cd ..; pwd)/$REPOSITORY_NAME/src"
 elif [[ "$OSTYPE" == msys* || "$OSTYPE" == cygwin* ]]; then
+  # Run script for Windows
   SCRIPT_DIR="$(cd "$(dirname "$0")"; pwd)"
 else
   echo "Unknown operating system"
