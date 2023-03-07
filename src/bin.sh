@@ -1,12 +1,16 @@
 #!/bin/bash
 
-if [[ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" || "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]]; then
-  echo "Windows is not supported, I would seriously consider using WSL..."
+REPOSITORY_NAME="@defi-wonderland/crypto-husky-checks"
+
+if [[ "$OSTYPE" == darwin* || "$OSTYPE" == linux* ]]; then
+  SCRIPT_DIR="$(cd "$(dirname "$0")"; cd ..; pwd)/$REPOSITORY_NAME/src"
+elif [[ "$OSTYPE" == msys* || "$OSTYPE" == cygwin* ]]; then
+  SCRIPT_DIR="$(cd "$(dirname "$0")"; pwd)"
+else
+  echo "Unknown operating system"
   exit 1;
 fi
 
-REPOSITORY_NAME="@defi-wonderland/crypto-husky-checks"
-# TODO: in order to support Windows, pwd must be replaced for something else
 SCRIPT_DIR="$(cd "$(dirname "$0")"; cd ..; pwd)/$REPOSITORY_NAME/src"
 HUSKY_DIR=".husky"
 INSTALL_DIR_NAME="wonderland"
