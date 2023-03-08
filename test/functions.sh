@@ -47,7 +47,7 @@ install() {
   echo "run prepareTwo"
   npm run prepareTwo
   npm pkg set scripts.prepare="husky install && wonderland-crypto-husky-checks install"
-  # npm run prepare 1>/dev/null
+  npm run prepare 1>/dev/null
   echo "finish"
 }
 
