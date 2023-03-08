@@ -27,7 +27,6 @@ jobs:
         node-version: [16]
         os: [windows-latest]
     steps:
-      - shell: bash
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
