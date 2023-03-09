@@ -5,7 +5,23 @@ name: Node.js CI
 on: [push]
 
 jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [16]
+        os: [ubuntu-latest, macOS-latest]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn --version
+      - run: yarn --frozen-lockfile
+      - run: yarn test
+
   build-windows:
+    if: ${{ false }} # disable till windows support in gh workflows
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -18,5 +34,4 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: yarn --version
       - run: yarn --frozen-lockfile
-      - run: PATH=$PATH:"/c/Program Files/Git" && echo $PATH && yarn test
-        shell: bash
+      - run: yarn test
