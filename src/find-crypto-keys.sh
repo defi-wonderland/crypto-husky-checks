@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash; C:/Program\ Files/Git/bin/bash.exe
 
 RESTORE='\033[0m'
 RED='\033[00;31m'

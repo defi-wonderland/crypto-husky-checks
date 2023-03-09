@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash; C:/Program\ Files/Git/bin/bash.exe
 
 REPOSITORY_NAME="@defi-wonderland/crypto-husky-checks"
 
