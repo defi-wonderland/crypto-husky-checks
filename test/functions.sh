@@ -31,7 +31,6 @@ install() {
   npm install ../crypto-husky-checks.tgz --silent
   npm pkg set scripts.prepare="husky install && wonderland-crypto-husky-checks install" --silent
   npm run prepare 1>/dev/null
-  echo "finish"
 }
 
 clean() {
