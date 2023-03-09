@@ -16,7 +16,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Add Git to PATH
+        run: |
+          echo "PATH=$PATH:/c/Program Files/Git" >> $GITHUB_ENV
       - run: yarn --version
       - run: yarn --frozen-lockfile
-      - run: set PATH=%PATH%;C:\Program Files\Git && echo $PATH && yarn test
-        shell: bash
+      - run: yarn test
+
