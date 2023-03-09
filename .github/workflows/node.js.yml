@@ -18,9 +18,5 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: yarn --version
       - run: yarn --frozen-lockfile
-      - run: set PATH=%PATH%;C:\Program Files\Git
-        shell: bash
-      - run: echo $PATH
-        shell: bash
-      - run: yarn test
+      - run: set PATH=%PATH%;C:\Program Files\Git && echo $PATH && yarn test
         shell: bash
