@@ -5,27 +5,13 @@ name: Node.js CI
 on: [push]
 
 jobs:
-  # build:
-  #   runs-on: ${{ matrix.os }}
-  #   strategy:
-  #     matrix:
-  #       node-version: [16]
-  #       os: [ubuntu-latest, macOS-latest]
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-  #     - run: yarn --version
-  #     - run: yarn --frozen-lockfile
-  #     - run: yarn test
-
   build-windows:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         node-version: [18]
         os: [windows-latest]
+    shell: bash
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -33,5 +19,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: yarn --version
       - run: yarn --frozen-lockfile
+      - run: set PATH=%PATH%;C:\Program Files\Git
+      - run: echo $PATH
       - run: yarn test
-        shell: bash
