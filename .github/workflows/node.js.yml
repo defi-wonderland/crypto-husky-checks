@@ -21,6 +21,7 @@ jobs:
       - run: yarn test
 
   build-windows:
+    if: ${{ false }} # disable till windows support in gh workflows
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
