@@ -22,8 +22,11 @@ yarn add -D husky
 ## Install
 
 ```bash
-yarn add -D @defi-wonderland/crypto-husky-checks
-npm set-script prepare "husky install && wonderland-crypto-husky-checks install"
+# Install dependencies
+yarn add -D husky @defi-wonderland/crypto-husky-checks
+
+# Enable husky and setup the prepare script
+npm pkg set scripts.prepare="husky && wonderland-crypto-husky-checks install"
 npm run prepare
 ```
 

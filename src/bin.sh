@@ -2,8 +2,11 @@
 
 REPOSITORY_NAME="@defi-wonderland/crypto-husky-checks"
 
-if [[ "$OSTYPE" == darwin* || "$OSTYPE" == linux* ]]; then
-  # Run script for MacOS and Linux
+if [[ "$OSTYPE" == darwin* ]]; then
+  # MacOS specific path - don't add repository name as it's already in the path
+  SCRIPT_DIR="$(cd "$(dirname "$0")"; cd ..; pwd)/src"
+elif [[ "$OSTYPE" == linux* ]]; then
+  # Linux specific path - needs repository name
   SCRIPT_DIR="$(cd "$(dirname "$0")"; cd ..; pwd)/$REPOSITORY_NAME/src"
 elif [[ "$OSTYPE" == msys* || "$OSTYPE" == cygwin* ]]; then
   # Run script for Windows
@@ -13,7 +16,6 @@ else
   exit 1;
 fi
 
-SCRIPT_DIR="$(cd "$(dirname "$0")"; cd ..; pwd)/$REPOSITORY_NAME/src"
 HUSKY_DIR=".husky"
 INSTALL_DIR_NAME="wonderland"
 INSTALL_DIR="$HUSKY_DIR/$INSTALL_DIR_NAME"
@@ -37,7 +39,8 @@ install()
 
   # create pre-commit file if needed
   if [ ! -f $PRE_COMMIT_FILE ]; then
-    npx husky add $PRE_COMMIT_FILE ""
+    echo "#!/bin/sh" > $PRE_COMMIT_FILE
+    chmod +x $PRE_COMMIT_FILE
   fi
 
   for script in "${SCRIPTS[@]}"
@@ -63,7 +66,13 @@ uninstall()
   rm -rf $INSTALL_DIR
 
   # remove wonderland lines from the pre-commit file
-  sed -i '' -e "/\/$INSTALL_DIR_NAME\//d" $PRE_COMMIT_FILE
+  if [[ "$OSTYPE" == darwin* ]]; then
+    # MacOS requires an empty string argument for -i
+    sed -i '' -e "/\/$INSTALL_DIR_NAME\//d" $PRE_COMMIT_FILE
+  else
+    # Linux/Unix version - no -e flag needed
+    sed -i "/\/$INSTALL_DIR_NAME\//d" $PRE_COMMIT_FILE
+  fi
 
   echo "Wonderland Husky Checks uninstalled succesfully"
 }
@@ -78,6 +87,6 @@ case $1 in
     ;;
 
   *)
-    echo "Unrecognized command $2"
+    echo "Unrecognized command $1"
     ;;
 esac
