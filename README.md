@@ -30,12 +30,20 @@ npm pkg set scripts.prepare="husky && wonderland-crypto-husky-checks install"
 npm run prepare
 ```
 
+## Troubleshooting
+
+If you encounter an error like this on macOS:
+
+```
+cp: .../node_modules/@defi-wonderland/crypto-husky-checks/@defi-wonderland/crypto-husky-checks/src/find-crypto-keys.sh: No such file or directory
+```
+
+This is a known issue with path construction on macOS that has been fixed in the latest version. Please update to the latest version of the package.
+
 ## Checks:
 
 ```
-
 find-crypto-keys.sh - Checks for crypto private keys on commited code. Should be added as a precommit hook
-
 ```
 
 ## License

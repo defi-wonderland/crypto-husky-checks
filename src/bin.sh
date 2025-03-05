@@ -3,8 +3,8 @@
 REPOSITORY_NAME="@defi-wonderland/crypto-husky-checks"
 
 if [[ "$OSTYPE" == darwin* ]]; then
-  # MacOS path - match Linux's working behavior
-  SCRIPT_DIR="$(cd "$(dirname "$0")"; cd ..; pwd)/$REPOSITORY_NAME/src"
+  # MacOS path - don't append repository name as it's already in the path
+  SCRIPT_DIR="$(cd "$(dirname "$0")"; cd ..; pwd)/src"
 elif [[ "$OSTYPE" == linux* ]]; then
   # Linux specific path - needs repository name
   SCRIPT_DIR="$(cd "$(dirname "$0")"; cd ..; pwd)/$REPOSITORY_NAME/src"
