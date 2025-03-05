@@ -24,7 +24,7 @@ jobs:
     needs: tag
     if: needs.tag.outputs.tag_name
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: actions/create-release@v1
         id: create_release
         env:
@@ -41,8 +41,8 @@ jobs:
     needs: tag
     if: needs.tag.outputs.tag_name
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: "20.x"
           registry-url: "https://registry.npmjs.org"
