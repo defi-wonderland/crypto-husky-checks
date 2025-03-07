@@ -31,6 +31,14 @@ install() {
   npm install /tmp/crypto-husky-checks.tgz --silent
   npm pkg set scripts.prepare="husky && wonderland-crypto-husky-checks install" --silent
 
+  # Fix package structure for macOS test environment
+  # On macOS, the package structure in tests is different from a normal npm installation
+  if [ "$(uname)" = "Darwin" ] && [ -d "node_modules/src" ] && [ ! -d "node_modules/@defi-wonderland/crypto-husky-checks/src" ]; then
+    echo "Fixing package structure for macOS test environment..."
+    mkdir -p node_modules/@defi-wonderland/crypto-husky-checks/src
+    cp node_modules/src/* node_modules/@defi-wonderland/crypto-husky-checks/src/ 2>/dev/null || true
+  fi
+
   # Run prepare script
   npm run prepare 1>/dev/null
 }
