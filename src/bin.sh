@@ -1,26 +1,27 @@
 #!/bin/bash
 
+# Get the directory of the binary
+BIN_DIR="$(dirname "$0")"
 REPOSITORY_NAME="@defi-wonderland/crypto-husky-checks"
-
-if [[ "$OSTYPE" == darwin* ]]; then
-  # MacOS path - don't append repository name as it's already in the path
-  SCRIPT_DIR="$(cd "$(dirname "$0")"; cd ..; pwd)/src"
-elif [[ "$OSTYPE" == linux* ]]; then
-  # Linux specific path - needs repository name
-  SCRIPT_DIR="$(cd "$(dirname "$0")"; cd ..; pwd)/$REPOSITORY_NAME/src"
-elif [[ "$OSTYPE" == msys* || "$OSTYPE" == cygwin* ]]; then
-  # Run script for Windows
-  SCRIPT_DIR="$(cd "$(dirname "$0")"; pwd)"
-else
-  echo "Unknown operating system"
-  exit 1;
-fi
-
 HUSKY_DIR=".husky"
 INSTALL_DIR_NAME="wonderland"
 INSTALL_DIR="$HUSKY_DIR/$INSTALL_DIR_NAME"
 PRE_COMMIT_FILE="$HUSKY_DIR/pre-commit"
 SCRIPTS=("find-crypto-keys.sh")
+
+if [[ "$OSTYPE" == darwin* ]]; then
+  # MacOS path - don't append repository name as it's already in the path
+  SCRIPT_DIR="$(cd "$BIN_DIR"; cd ..; pwd)/src"
+elif [[ "$OSTYPE" == linux* ]]; then
+  # Linux specific path - needs repository name
+  SCRIPT_DIR="$(cd "$BIN_DIR"; cd ..; pwd)/$REPOSITORY_NAME/src"
+elif [[ "$OSTYPE" == msys* || "$OSTYPE" == cygwin* ]]; then
+  # Run script for Windows
+  SCRIPT_DIR="$(cd "$BIN_DIR"; pwd)"
+else
+  echo "Unknown operating system"
+  exit 1;
+fi
 
 install()
 {
