@@ -21,6 +21,23 @@ yarn add -D husky
 
 ## Install
 
+### For Husky v9+ (latest)
+
+```bash
+# Install dependencies
+yarn add -D husky @defi-wonderland/crypto-husky-checks
+
+# Initialize husky (creates .husky/pre-commit and updates package.json)
+npx husky init
+
+# Install the crypto checks
+npx wonderland-crypto-husky-checks install
+```
+
+> **Note**: When using husky v9+, the `husky init` command adds `npm test` to the pre-commit hook by default. Our installation script will automatically remove this line to avoid running tests on every commit.
+
+### For older Husky versions
+
 ```bash
 # Install dependencies
 yarn add -D husky @defi-wonderland/crypto-husky-checks
