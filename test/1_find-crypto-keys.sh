@@ -1,3 +1,4 @@
+#!/bin/bash
 # Setup and install
 . "$(dirname -- "$0")/functions.sh"
 setup
