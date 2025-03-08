@@ -4,6 +4,7 @@ RESTORE='\033[0m'
 RED='\033[00;31m'
 YELLOW='\033[00;33m'
 BLUE='\033[00;34m'
+GREEN='\033[00;32m'
 
 FOUND=""
 
@@ -39,5 +40,7 @@ if [ ! -z "$FOUND" ]; then
     printf "Please check the next files, if they are ok, commit with ${YELLOW}--no-verify${RESTORE}\n"
     printf "$FOUND"
     exit 1
+else
+    printf "${BLUE}No private keys found. ${GREEN}All good${RESTORE}\n"
 fi
 exit 0
