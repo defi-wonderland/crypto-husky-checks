@@ -9,11 +9,8 @@ INSTALL_DIR="$HUSKY_DIR/$INSTALL_DIR_NAME"
 PRE_COMMIT_FILE="$HUSKY_DIR/pre-commit"
 SCRIPTS=("find-crypto-keys.sh")
 
-if [[ "$OSTYPE" == darwin* ]]; then
-  # MacOS path - don't append repository name as it's already in the path
-  SCRIPT_DIR="$(cd "$BIN_DIR"; cd ..; pwd)/$REPOSITORY_NAME/src"
-elif [[ "$OSTYPE" == linux* ]]; then
-  # Linux specific path - needs repository name
+if [[ "$OSTYPE" == darwin* || "$OSTYPE" == linux* ]]; then
+  # MacOS and Linux path - both use the same logic now
   SCRIPT_DIR="$(cd "$BIN_DIR"; cd ..; pwd)/$REPOSITORY_NAME/src"
 elif [[ "$OSTYPE" == msys* || "$OSTYPE" == cygwin* ]]; then
   # Run script for Windows
@@ -67,13 +64,7 @@ uninstall()
   rm -rf $INSTALL_DIR
 
   # remove wonderland lines from the pre-commit file
-  if [[ "$OSTYPE" == darwin* ]]; then
-    # MacOS requires an empty string argument for -i
-    sed -i '' -e "/wonderland/d" $PRE_COMMIT_FILE
-  else
-    # Linux/Unix version - no -e flag needed
-    sed -i "/\/$INSTALL_DIR_NAME\//d" $PRE_COMMIT_FILE
-  fi
+  sed -i "/\/$INSTALL_DIR_NAME\//d" $PRE_COMMIT_FILE
 
   echo "Wonderland Husky Checks uninstalled successfully"
 }
