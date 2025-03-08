@@ -1,0 +1,107 @@
+# This integration test has been disabled as the functionality is already covered by the regular tests
+# which run on both Ubuntu and macOS in the node.js.yml workflow.
+
+name: Integration Tests
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  integration-test:
+    # Disable the job with a condition that's always false
+    if: ${{ false }}
+    name: Integration Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Create test project and run tests
+        run: |
+          # Create a new folder project for test
+          mkdir -p /tmp/test-project
+          cd /tmp/test-project
+
+          # Initialize git
+          git init
+          git config --global user.email "test@example.com"
+          git config --global user.name "Test User"
+
+          # Create a package.json file
+          echo '{"name":"test-project","version":"1.0.0"}' > package.json
+
+          # Get the latest canary version
+          LATEST_CANARY=$(npm view @defi-wonderland/crypto-husky-checks dist-tags.canary)
+          echo "Using latest canary version: $LATEST_CANARY"
+
+          # Install dependencies as specified
+          npm add -D husky@latest @defi-wonderland/crypto-husky-checks@$LATEST_CANARY
+
+          # Setup prepare script
+          npm pkg set scripts.prepare="husky && wonderland-crypto-husky-checks install"
+          npm run prepare
+
+          # Debug information
+          echo "Directory structure after installation:"
+          ls -la
+          echo "Husky directory structure:"
+          ls -la .husky/
+          if [ -d ".husky/wonderland" ]; then
+            echo "Wonderland directory structure:"
+            ls -la .husky/wonderland/
+          fi
+          echo "Pre-commit hook content:"
+          cat .husky/pre-commit
+
+          # Create a file with a leak
+          echo "testLeak=abd3d28282b3b0e68918328527dbf73f6e79781bbaded0b24fdc3e43bf6fc56e" > test-key.txt
+
+          # Add the file to git
+          git add test-key.txt
+
+          # Try to commit and capture the output
+          COMMIT_OUTPUT=$(git commit -m "feat: test commit with fake private key" 2>&1 || true)
+          echo "Commit output:"
+          echo "$COMMIT_OUTPUT"
+
+          # Save output to a file for easier processing
+          echo "$COMMIT_OUTPUT" > commit_output.txt
+
+          # Check if the commit failed with the expected message
+          if grep -q "COMMIT REJECTED" commit_output.txt && grep -q "Possible private key" commit_output.txt; then
+            echo "Success: Commit was rejected with the expected message"
+          else
+            echo "Error: Commit did not fail with the expected message"
+            echo "Full output:"
+            cat commit_output.txt
+            exit 1
+          fi
+
+          # Test uninstall functionality
+          echo "Testing uninstall functionality..."
+          npx wonderland-crypto-husky-checks uninstall
+
+          # Check if the wonderland directory was removed
+          if [ -d ".husky/wonderland" ]; then
+            echo "Error: .husky/wonderland directory still exists after uninstall"
+            exit 1
+          fi
+
+          # Check if the pre-commit hook was cleaned up
+          if grep -q "wonderland" .husky/pre-commit; then
+            echo "Error: pre-commit hook still contains references to wonderland after uninstall"
+            echo "Pre-commit hook content after uninstall:"
+            cat .husky/pre-commit
+            exit 1
+          fi
+
+          echo "Success: Uninstall functionality works correctly"
