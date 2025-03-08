@@ -11,7 +11,7 @@ SCRIPTS=("find-crypto-keys.sh")
 
 if [[ "$OSTYPE" == darwin* ]]; then
   # MacOS path - don't append repository name as it's already in the path
-  SCRIPT_DIR="$(cd "$BIN_DIR"; cd ..; pwd)/src"
+  SCRIPT_DIR="$(cd "$BIN_DIR"; cd ..; pwd)/$REPOSITORY_NAME/src"
 elif [[ "$OSTYPE" == linux* ]]; then
   # Linux specific path - needs repository name
   SCRIPT_DIR="$(cd "$BIN_DIR"; cd ..; pwd)/$REPOSITORY_NAME/src"
