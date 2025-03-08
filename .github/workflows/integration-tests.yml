@@ -34,8 +34,12 @@ jobs:
           # Create a package.json file
           echo '{"name":"test-project","version":"1.0.0"}' > package.json
 
+          # Get the latest canary version
+          LATEST_CANARY=$(npm view @defi-wonderland/crypto-husky-checks dist-tags.canary)
+          echo "Using latest canary version: $LATEST_CANARY"
+
           # Install dependencies as specified
-          npm add -D husky@latest @defi-wonderland/crypto-husky-checks@0.0.0-3faa4c4c
+          npm add -D husky@latest @defi-wonderland/crypto-husky-checks@$LATEST_CANARY
 
           # Setup prepare script
           npm pkg set scripts.prepare="husky && wonderland-crypto-husky-checks install"
