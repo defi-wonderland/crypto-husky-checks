@@ -80,3 +80,23 @@ jobs:
             cat commit_output.txt
             exit 1
           fi
+
+          # Test uninstall functionality
+          echo "Testing uninstall functionality..."
+          npx wonderland-crypto-husky-checks uninstall
+
+          # Check if the wonderland directory was removed
+          if [ -d ".husky/wonderland" ]; then
+            echo "Error: .husky/wonderland directory still exists after uninstall"
+            exit 1
+          fi
+
+          # Check if the pre-commit hook was cleaned up
+          if grep -q "wonderland" .husky/pre-commit; then
+            echo "Error: pre-commit hook still contains references to wonderland after uninstall"
+            echo "Pre-commit hook content after uninstall:"
+            cat .husky/pre-commit
+            exit 1
+          fi
+
+          echo "Success: Uninstall functionality works correctly"
