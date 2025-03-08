@@ -1,0 +1,69 @@
+name: Integration Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  integration-test:
+    name: Integration Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Create test project and run tests
+        run: |
+          # Create a new folder project for test
+          mkdir -p /tmp/test-project
+          cd /tmp/test-project
+
+          # Initialize git
+          git init
+          git config --global user.email "test@example.com"
+          git config --global user.name "Test User"
+
+          # Create a package.json file
+          echo '{"name":"test-project","version":"1.0.0"}' > package.json
+
+          # Install dependencies as specified
+          npm add -D -w husky@latest @defi-wonderland/crypto-husky-checks@0.0.0-676673bd
+
+          # Setup prepare script
+          npm pkg set scripts.prepare="husky && wonderland-crypto-husky-checks install"
+          npm run prepare
+
+          # Debug information
+          echo "Directory structure after installation:"
+          ls -la
+          echo "Husky directory structure:"
+          ls -la .husky/
+          if [ -d ".husky/wonderland" ]; then
+            echo "Wonderland directory structure:"
+            ls -la .husky/wonderland/
+          fi
+          echo "Pre-commit hook content:"
+          cat .husky/pre-commit
+
+          # Create a file with a leak
+          echo "testLeak=abd3d28282b3b0e68918328527dbf73f6e79781bbaded0b24fdc3e43bf6fc56e" > test-key.txt
+
+          # Add the file to git
+          git add test-key.txt
+
+          # Try to commit (should fail)
+          if git commit -m "feat: test commit with fake private key"; then
+            echo "Error: Commit with leak succeeded, but it should have failed"
+            exit 1
+          else
+            echo "Success: Commit with leak was blocked as expected"
+          fi
