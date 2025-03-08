@@ -31,14 +31,6 @@ install() {
   npm install /tmp/crypto-husky-checks.tgz --silent
   npm pkg set scripts.prepare="husky && wonderland-crypto-husky-checks install" --silent
 
-  # Fix for macOS test environment
-  # This is only needed for tests, not for real-world usage
-  if [ "$(uname)" = "Darwin" ]; then
-    # Create a symlink from where the script expects the file to where it actually is
-    mkdir -p node_modules/src
-    ln -sf "$(pwd)/node_modules/@defi-wonderland/crypto-husky-checks/src/find-crypto-keys.sh" "$(pwd)/node_modules/src/find-crypto-keys.sh"
-  fi
-
   # Run prepare script
   npm run prepare 1>/dev/null
 }
