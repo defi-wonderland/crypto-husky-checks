@@ -1,3 +1,6 @@
+# This integration test has been disabled as the functionality is already covered by the regular tests
+# which run on both Ubuntu and macOS in the node.js.yml workflow.
+
 name: Integration Tests
 
 on:
@@ -6,6 +9,8 @@ on:
 
 jobs:
   integration-test:
+    # Disable the job with a condition that's always false
+    if: ${{ false }}
     name: Integration Test on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:

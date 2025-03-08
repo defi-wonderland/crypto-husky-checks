@@ -13,17 +13,11 @@ Features:
 
 ---
 
-## Requirements
-
-```bash
-yarn add -D husky
-```
-
 ## Install
 
 ```bash
 # Install the latest versions (will be fixed to the current latest version)
-yarn add -D husky@latest @defi-wonderland/crypto-husky-checks@latest
+npm add -D husky@latest @defi-wonderland/crypto-husky-checks@latest
 
 # Enable husky and setup the prepare script
 npm pkg set scripts.prepare="husky && wonderland-crypto-husky-checks install"
