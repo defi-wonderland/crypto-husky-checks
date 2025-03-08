@@ -36,7 +36,7 @@ jobs:
           echo '{"name":"test-project","version":"1.0.0"}' > package.json
 
           # Install dependencies as specified
-          npm add -D -w husky@latest @defi-wonderland/crypto-husky-checks@0.0.0-676673bd
+          npm add -D husky@latest @defi-wonderland/crypto-husky-checks@0.0.0-4c81d0bf
 
           # Setup prepare script
           npm pkg set scripts.prepare="husky && wonderland-crypto-husky-checks install"
