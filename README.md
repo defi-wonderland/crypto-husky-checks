@@ -21,31 +21,16 @@ yarn add -D husky
 
 ## Install
 
-### For Husky v9+ (latest)
-
 ```bash
-# Install dependencies
-yarn add -D husky @defi-wonderland/crypto-husky-checks
-
-# Initialize husky (creates .husky/pre-commit and updates package.json)
-npx husky init
-
-# Install the crypto checks
-npx wonderland-crypto-husky-checks install
-```
-
-> **Note**: When using husky v9+, the `husky init` command adds `npm test` to the pre-commit hook by default. Our installation script will automatically remove this line to avoid running tests on every commit.
-
-### For older Husky versions
-
-```bash
-# Install dependencies
-yarn add -D husky @defi-wonderland/crypto-husky-checks
+# Install the latest versions (will be fixed to the current latest version)
+yarn add -D husky@latest @defi-wonderland/crypto-husky-checks@latest
 
 # Enable husky and setup the prepare script
 npm pkg set scripts.prepare="husky && wonderland-crypto-husky-checks install"
 npm run prepare
 ```
+
+> **Note**: Using `@latest` installs the exact version that is latest at the time of installation, not a version range. This means your package.json will have fixed versions like `"husky": "9.1.7"` without any caret (`^`) or tilde (`~`) prefix.
 
 ## Troubleshooting
 
