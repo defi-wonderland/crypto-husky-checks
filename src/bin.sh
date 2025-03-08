@@ -64,7 +64,13 @@ uninstall()
   rm -rf $INSTALL_DIR
 
   # remove wonderland lines from the pre-commit file
-  sed -i "/\/$INSTALL_DIR_NAME\//d" $PRE_COMMIT_FILE
+  if [[ "$OSTYPE" == darwin* ]]; then
+    # MacOS requires an empty string argument for -i
+    sed -i '' "/\/$INSTALL_DIR_NAME\//d" $PRE_COMMIT_FILE
+  else
+    # Linux/Unix version
+    sed -i "/\/$INSTALL_DIR_NAME\//d" $PRE_COMMIT_FILE
+  fi
 
   echo "Wonderland Husky Checks uninstalled successfully"
 }
