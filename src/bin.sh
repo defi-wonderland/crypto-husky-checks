@@ -55,7 +55,7 @@ install()
 
 . "\$(dirname "\$0")/$INSTALL_DIR_NAME/$script"
 EOF
-fi > /dev/null
+    fi > /dev/null
   done
 
   echo "Wonderland Husky Checks configured succesfully"
