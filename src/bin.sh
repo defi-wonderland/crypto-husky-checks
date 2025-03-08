@@ -50,7 +50,7 @@ install()
     if ! grep -q $script $PRE_COMMIT_FILE; then
       tee -a $PRE_COMMIT_FILE << EOF
 
-. "\$(dirname "\$0")/wonderland/$script"
+. "\$(dirname "\$0")/$INSTALL_DIR_NAME/$script"
 EOF
     fi > /dev/null
   done
