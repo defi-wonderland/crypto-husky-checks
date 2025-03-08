@@ -64,10 +64,15 @@ jobs:
           echo "Commit output:"
           echo "$COMMIT_OUTPUT"
 
-          # Check if the commit failed
-          if echo "$COMMIT_OUTPUT" | grep -q "COMMIT REJECTED: Possible private key"; then
+          # Save output to a file for easier processing
+          echo "$COMMIT_OUTPUT" > commit_output.txt
+
+          # Check if the commit failed with the expected message
+          if grep -q "COMMIT REJECTED" commit_output.txt && grep -q "Possible private key" commit_output.txt; then
             echo "Success: Commit was rejected with the expected message"
           else
             echo "Error: Commit did not fail with the expected message"
+            echo "Full output:"
+            cat commit_output.txt
             exit 1
           fi
