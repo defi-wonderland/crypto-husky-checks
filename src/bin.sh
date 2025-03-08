@@ -44,6 +44,9 @@ install()
     chmod +x $PRE_COMMIT_FILE
   fi
 
+  # Get the absolute path to the project root
+  PROJECT_ROOT="$(pwd)"
+
   for script in "${SCRIPTS[@]}"
   do
     # copy script to wonderland directory
@@ -51,10 +54,19 @@ install()
 
     # add script to pre-commit if needed
     if ! grep -q $script $PRE_COMMIT_FILE; then
-      tee -a $PRE_COMMIT_FILE << EOF
+      if [[ "$OSTYPE" == darwin* ]]; then
+        # On macOS, use absolute path to avoid dirname issues
+        tee -a $PRE_COMMIT_FILE << EOF
+
+. "$PROJECT_ROOT/$INSTALL_DIR/$script"
+EOF
+      else
+        # On other platforms, use relative path
+        tee -a $PRE_COMMIT_FILE << EOF
 
 . "\$(dirname "\$0")/$INSTALL_DIR_NAME/$script"
 EOF
+      fi
     fi > /dev/null
   done
 
@@ -69,7 +81,7 @@ uninstall()
   # remove wonderland lines from the pre-commit file
   if [[ "$OSTYPE" == darwin* ]]; then
     # MacOS requires an empty string argument for -i
-    sed -i '' -e "/\/$INSTALL_DIR_NAME\//d" $PRE_COMMIT_FILE
+    sed -i '' -e "/\/$INSTALL_DIR_NAME\//d" -e "/$INSTALL_DIR\//d" $PRE_COMMIT_FILE
   else
     # Linux/Unix version - no -e flag needed
     sed -i "/\/$INSTALL_DIR_NAME\//d" $PRE_COMMIT_FILE
