@@ -25,7 +25,7 @@ fi
 
 install()
 {
-  # fail if husky install was not run
+  # Check if husky is installed and set up
   if [ ! -d $HUSKY_DIR ]; then
     echo "Husky must be configured before setting up Wonderland Husky Checks"
     exit 1;
@@ -75,7 +75,7 @@ uninstall()
     sed -i "/\/$INSTALL_DIR_NAME\//d" $PRE_COMMIT_FILE
   fi
 
-  echo "Wonderland Husky Checks uninstalled succesfully"
+  echo "Wonderland Husky Checks uninstalled successfully"
 }
 
 case $1 in
