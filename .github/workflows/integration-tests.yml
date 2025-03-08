@@ -59,10 +59,15 @@ jobs:
           # Add the file to git
           git add test-key.txt
 
-          # Try to commit (should fail)
-          if git commit -m "feat: test commit with fake private key"; then
-            echo "Error: Commit with leak succeeded, but it should have failed"
-            exit 1
+          # Try to commit and capture the output
+          COMMIT_OUTPUT=$(git commit -m "feat: test commit with fake private key" 2>&1 || true)
+          echo "Commit output:"
+          echo "$COMMIT_OUTPUT"
+
+          # Check if the commit failed
+          if echo "$COMMIT_OUTPUT" | grep -q "COMMIT REJECTED: Possible private key"; then
+            echo "Success: Commit was rejected with the expected message"
           else
-            echo "Success: Commit with leak was blocked as expected"
+            echo "Error: Commit did not fail with the expected message"
+            exit 1
           fi
