@@ -13,26 +13,33 @@ Features:
 
 ---
 
-## Requirements
-
-```bash
-yarn add -D husky
-```
-
 ## Install
 
 ```bash
-yarn add -D @defi-wonderland/crypto-husky-checks
-npm set-script prepare "husky install && wonderland-crypto-husky-checks install"
+# Install the latest versions (will be fixed to the current latest version)
+npm add -D husky@latest @defi-wonderland/crypto-husky-checks@latest
+
+# Enable husky and setup the prepare script
+npm pkg set scripts.prepare="husky && wonderland-crypto-husky-checks install"
 npm run prepare
 ```
+
+> **Note**: Using `@latest` installs the exact version that is latest at the time of installation, not a version range. This means your package.json will have fixed versions like `"husky": "9.1.7"` without any caret (`^`) or tilde (`~`) prefix.
+
+## Troubleshooting
+
+If you encounter an error like this on macOS:
+
+```
+cp: .../node_modules/@defi-wonderland/crypto-husky-checks/@defi-wonderland/crypto-husky-checks/src/find-crypto-keys.sh: No such file or directory
+```
+
+This is a known issue with path construction on macOS that has been fixed in the latest version. Please update to the latest version of the package.
 
 ## Checks:
 
 ```
-
 find-crypto-keys.sh - Checks for crypto private keys on commited code. Should be added as a precommit hook
-
 ```
 
 ## License

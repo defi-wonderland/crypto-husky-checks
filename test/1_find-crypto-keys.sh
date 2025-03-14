@@ -34,6 +34,7 @@ end line
 EOF
 
 git add .
+# Expect non-zero exit code (commit should fail)
 expect 1 "git commit -m foo -q > /dev/null 2>&1"
 ok "Expect commit with leaks to fail"
 
@@ -62,6 +63,7 @@ end line
 EOF
 
 git add .
+# Expect non-zero exit code (commit should fail)
 expect 1 "git commit -m foo -q > /dev/null 2>&1"
 ok "Expect commit with multiple leaks to fail"
 
@@ -77,8 +79,23 @@ end line
 EOF
 
 git add .
-expect 1 "git commit -m foo -q > /dev/null 2>&1"
+# Capture output for leak verification and expect non-zero exit code
+OUTPUT=$(git commit -m foo 2>&1 || true)
+# We expect grep to find the text (exit code 0)
+expect 0 "echo \"$OUTPUT\" | grep -q 'COMMIT REJECTED'"
 ok "Expect commit with multiple files and leaks to fail"
+
+####################################################
+# Verify all leaks are found
+####################################################
+# Check each leak is present in the output
+expect 0 "echo \"$OUTPUT\" | grep -q fc561"
+expect 0 "echo \"$OUTPUT\" | grep -q fc562"
+expect 0 "echo \"$OUTPUT\" | grep -q fc563"
+expect 0 "echo \"$OUTPUT\" | grep -q fc564"
+expect 0 "echo \"$OUTPUT\" | grep -q fc565"
+expect 0 "echo \"$OUTPUT\" | grep -q fc566"
+ok "All leaks were found in the output"
 
 ####################################################
 
