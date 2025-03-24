@@ -38,6 +38,7 @@ jobs:
   publish:
     name: Build and publish
     runs-on: ubuntu-latest
+    environment: Production
     needs: tag
     if: needs.tag.outputs.tag_name
     steps:
