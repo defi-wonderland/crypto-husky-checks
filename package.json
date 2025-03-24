@@ -1,6 +1,6 @@
 {
   "name": "@defi-wonderland/crypto-husky-checks",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "Automated security checks for your precommit hook",
   "scripts": {
     "build": "echo 'Build not necessary'",
