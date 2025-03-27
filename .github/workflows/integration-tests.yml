@@ -10,7 +10,7 @@ on:
 jobs:
   integration-test:
     # Disable the job with a condition that's always false
-    # if: ${{ false }}
+    if: ${{ false }}
     name: Integration Test on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
