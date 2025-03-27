@@ -9,7 +9,11 @@ INSTALL_DIR="$HUSKY_DIR/$INSTALL_DIR_NAME"
 PRE_COMMIT_FILE="$HUSKY_DIR/pre-commit"
 SCRIPTS=("find-crypto-keys.sh")
 
-if [[ "$OSTYPE" == darwin* || "$OSTYPE" == linux* ]]; then
+# Detect if we're using pnpm by checking the path
+if [[ "$BIN_DIR" == *".pnpm"* ]]; then
+  # pnpm specific path handling
+  SCRIPT_DIR="$(cd "$BIN_DIR"; cd ..; pwd)/src"
+elif [[ "$OSTYPE" == darwin* || "$OSTYPE" == linux* ]]; then
   # MacOS and Linux path - both use the same logic now
   SCRIPT_DIR="$(cd "$BIN_DIR"; cd ..; pwd)/$REPOSITORY_NAME/src"
 elif [[ "$OSTYPE" == msys* || "$OSTYPE" == cygwin* ]]; then
@@ -43,8 +47,23 @@ install()
 
   for script in "${SCRIPTS[@]}"
   do
-    # copy script to wonderland directory
-    cp "$SCRIPT_DIR/$script" "$INSTALL_DIR/"
+    # Try to find the script in multiple possible locations
+    if [ -f "$SCRIPT_DIR/$script" ]; then
+      # Standard path
+      cp "$SCRIPT_DIR/$script" "$INSTALL_DIR/" || {
+        echo "Error: Failed to copy $script from $SCRIPT_DIR"
+        exit 1
+      }
+    elif [ -f "$BIN_DIR/../src/$script" ]; then
+      # Alternative path for pnpm
+      cp "$BIN_DIR/../src/$script" "$INSTALL_DIR/" || {
+        echo "Error: Failed to copy $script from $BIN_DIR/../src"
+        exit 1
+      }
+    else
+      echo "Error: Failed to find $script"
+      exit 1
+    fi
 
     # add script to pre-commit if needed
     if ! grep -q $script $PRE_COMMIT_FILE; then

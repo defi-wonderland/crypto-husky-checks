@@ -25,6 +25,9 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       - name: Create test project and run tests
         run: |
           # Create a new folder project for test
@@ -43,12 +46,15 @@ jobs:
           LATEST_CANARY=$(npm view @defi-wonderland/crypto-husky-checks dist-tags.canary)
           echo "Using latest canary version: $LATEST_CANARY"
 
-          # Install dependencies as specified
-          npm add -D husky@latest @defi-wonderland/crypto-husky-checks@$LATEST_CANARY
+          # Install dependencies using pnpm
+          pnpm add -D husky@latest @defi-wonderland/crypto-husky-checks@$LATEST_CANARY
 
           # Setup prepare script
-          npm pkg set scripts.prepare="husky && wonderland-crypto-husky-checks install"
-          npm run prepare
+          pnpm pkg set scripts.prepare="husky && wonderland-crypto-husky-checks install"
+
+          # Run prepare script and display output
+          echo "Running prepare script..."
+          pnpm prepare
 
           # Debug information
           echo "Directory structure after installation:"
@@ -88,7 +94,7 @@ jobs:
 
           # Test uninstall functionality
           echo "Testing uninstall functionality..."
-          npx wonderland-crypto-husky-checks uninstall
+          pnpm dlx wonderland-crypto-husky-checks uninstall
 
           # Check if the wonderland directory was removed
           if [ -d ".husky/wonderland" ]; then

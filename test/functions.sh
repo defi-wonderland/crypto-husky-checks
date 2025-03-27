@@ -27,12 +27,35 @@ setup() {
 }
 
 install() {
+  # Check if PACKAGE_MANAGER env var is set to pnpm
+  if [ "${PACKAGE_MANAGER:-npm}" = "pnpm" ]; then
+    install_pnpm
+  else
+    install_npm
+  fi
+}
+
+install_npm() {
   npm install husky -D --silent
   npm install /tmp/crypto-husky-checks.tgz --silent
   npm pkg set scripts.prepare="husky && wonderland-crypto-husky-checks install" --silent
 
   # Run prepare script
   npm run prepare 1>/dev/null
+}
+
+install_pnpm() {
+  pnpm add -D husky --silent
+  pnpm add -D /tmp/crypto-husky-checks.tgz --silent
+  pnpm pkg set scripts.prepare="husky && wonderland-crypto-husky-checks install" --silent
+
+  # Run prepare script with pnpm and capture any errors
+  echo "Running prepare with pnpm..."
+  if ! pnpm prepare 1>/dev/null 2>&1; then
+    echo "Error during pnpm prepare. Running again to see error:"
+    pnpm prepare
+    exit 1
+  fi
 }
 
 clean() {
