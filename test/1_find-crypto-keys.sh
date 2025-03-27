@@ -21,7 +21,7 @@ ok "Expect script on precommit file"
 # Expect commit to pass
 ####################################################
 git add .
-expect 0 "git commit -m foo -q"
+expect 0 "git commit -m foo -q > /dev/null 2>&1"
 ok "Expect commit to pass"
 
 ####################################################
@@ -48,7 +48,7 @@ end line
 EOF
 
 git add .
-expect 0 "git commit -m foo -q"
+expect 0 "git commit -m foo -q > /dev/null 2>&1"
 ok "Expect commit fixed to pass"
 
 ####################################################
